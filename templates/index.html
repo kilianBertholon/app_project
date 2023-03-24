@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet IMU Digisport</title>
+    <style>
+        header {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #ff6852;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        nav li {
+            margin-right: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #000000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+        }
+        
+        .graphique {
+            width: 500px;
+            height: 300px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px #ccc;
+        }
+        
+        section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        article {
+            width: 45%;
+            background-color: #f7f7f7;
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px #ccc;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        h2 {
+            text-align: center;
+        }
+        
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .footer-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1> Page d'accueil Analyse d'un sprint à partir d'un IMU (Xsens DOT)</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#" class="btn">Accueil</a></li>
+            <li><a href="#" class="btn">À propos du projet</a></li>
+            <li><a href="historique.html" class="btn">Historique des tests</a></li>
+            <li><a href="#" class="btn">Contact</a></li>
+    </nav>
+  </ul>
+  </div>
+</nav>
+    <main>
+    <h2>Choisissez un test à analyser</h2>
+        <form action="/analyse" method="get">
+            <label for="test_name">Sélectionnez un test:</label>
+            <select name="test_name" id="test_name">
+                {% for test in liste_tests %}
+                <option value="{{ test }}">{{ test }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Lancer l'analyse">
+        </form>
+    </main>
+        <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <p>Copyright © 2023 Projet IMU Digisport</p>
+                <p> By Aymeric Fontaine</p>
+                <p> Nour Ait Kadour</p>
+                <p> Marwa Gnaoui</p>
+                <p> Kilian Bertholon</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+document.getElementById("lancer-analyse").addEventListener("click", function() {
+    const test = document.getElementById("test-selector").value;
+    window.location.href = "/analyse/" + encodeURIComponent(test);
+});
+</script>
+</body>
+</html>

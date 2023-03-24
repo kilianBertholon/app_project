@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet IMU Digisport</title>
+    <style>
+        header {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #ff6852;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        nav li {
+            margin-right: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #000000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+        }
+        
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .results {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .graph {
+            flex: 1;
+            padding-left: 20px;
+            text-align: center;
+            
+        }
+            
+        .graph-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            
+        }
+          
+        
+        h1 {
+            text-align: center;
+        }
+        
+        h2 {
+            text-align: center;
+        }
+        
+        footer {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .footer-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        
+        }
+        
+         /* Ajouté pour définir une hauteur maximale pour le contenu principal */
+        main {
+            max-height: calc(100% - 60px - 60px); /* 60px est la hauteur du header et du footer */
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Analyse d'un sprint à partir d'un IMU (Xsens DOT)</h1>
+    </header>
+        <nav>
+            <ul>
+                <li><a href="#" class="btn">Accueil</a></li>
+                <li><a href="#" class="btn">À propos du projet</a></li>
+                <li><a href="historique.html" class="btn">Historique des tests</a></li>
+                <li><a href="#" class="btn">Contact</a></li>
+            </nav>
+          </ul>
+      </div>
+</nav>
+        <main>
+        <div class="content-wrapper">
+             <div class="results">   
+                <h2>Résultats d'analyse</h2>
+                    <form action="{{ url_for('analyse') }}" method="POST">
+                        <label for="distance">Distance (en mètres) :</label>
+                        <input type="number" id="distance" name="distance" step="0.01" required>
+                        <input type="submit" value="Mettre à jour la distance">
+                    </form>
+                    <table>
+                        <tr>
+                            <th>paramètres étudiés</th>
+                            <th> Données</th>
+                            <th>unité</th>
+                        </tr>
+                        <tr>
+                            <th>Temps de contact médian</th>
+                            <td>{{ resultats.median_ground_contact }}</td>
+                            <td>en seconde</td>
+                        </tr>
+                        <tr>
+                            <th>Temps de course</th>
+                            <td>{{ resultats.tps_course }}</td>
+                            <td>en seconde</td>
+                        </tr>
+                        <tr>
+                            <th>Vitesse moyenne de course</th>
+                            <td>{{ resultats.vitesse }} m/s</td>
+                            <td>en m/s</td>
+                        </tr>
+                        <tr>
+                            <th>Vitesse moyenne de course</th>
+                            <td>{{ resultats.vitesse_km_h }} km/h</td>
+                            <td>en km/h</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre de foulées</th>
+                            <td>{{ resultats.nombre_foulees }}</td>
+                            <td>sur la course</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre de foulées</th>
+                            <td>{{ resultats.ppm }}</td>
+                            <td>en ppm (pas par minutes)</td>
+                        </tr>
+                        <tr>
+                            <th>Foulée moyenne de</th>
+                            <td>{{ resultats.longueur_foulee}}</td>
+                            <td>en mètres</td>
+                        </tr>
+                </table>
+            </div>
+            <div class='graph'>            
+                <h2>Graphique d'analyse</h2>
+                <div class='graph-container'>
+                    <img src="{{ url_for('static', filename='mon_graphique.png') }}" alt="Mon graphique" class="graphique">
+                </div>
+            </div>
+        </div>
+      </main>
+        <footer>
+            <div class="footer-container">
+                <div class="footer-info">
+                    <p>Copyright © 2023 Projet IMU Digisport</p>
+                    <p> By Aymeric Fontaine</p>
+                    <p> Nour Ait Kadour</p>
+                    <p> Marwa Gnaoui</p>
+                    <p> Kilian Bertholon</p>
+                </div>
+            </div>
+        </footer>
+</body>
+</html>
