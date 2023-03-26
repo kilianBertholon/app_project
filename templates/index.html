@@ -9,11 +9,13 @@
             background-color: #000000;
             color: #fff;
             padding: 10px;
+            text-align: center;
         }
         
         nav {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 10px;
             background-color: #ff6852;
         }
@@ -45,10 +47,17 @@
         }
         
         .graphique {
-            width: 500px;
+            width: 100%;
+            max-width: 500px;
             height: 300px;
             border: 1px solid #ccc;
             box-shadow: 2px 2px 5px #ccc;
+        }
+        
+        .content-wrapper{
+            display: flex;
+            justify-content :space-between;
+            
         }
         
         section {
@@ -58,33 +67,85 @@
         }
         
         article {
-            width: 45%;
             background-color: #f7f7f7;
-            padding: 10px;
+            padding: 20px;
             border: 1px solid #ccc;
             box-shadow: 2px 2px 5px #ccc;
+            margin-bottom: 20px;
         }
         
         h1 {
             text-align: center;
+            margin: 0;
+            font-size: 2em;
         }
         
         h2 {
             text-align: center;
+            margin-top: 0;
+            font-size: 1.5em;
         }
         
         footer {
-            background-color: #000000;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: #000000;
+          color: #fff;
+          padding: 10px;
+          text-align: center;
         }
         
         .footer-container {
           display: flex;
           justify-content: space-between;
           align-items: center;
-}
+        }
+        
+        form {
+            margin-bottom: 50px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="submit"], button {
+            display: block;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #000000;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+        
+        input[type="submit"]:hover, button:hover {
+            background-color: #333;
+        }
+        
+        html, body {
+          height: 100%;
+          margin: 0;
+        }
+        
+        body{
+            display: flex;
+            flex-direction: column;
+        }
+
+        
+        /* Ajouté pour définir une hauteur maximale pour le contenu principal */
+        main {
+            max-height: calc(100% - 60px - 60px); /* 60px est la hauteur du header et du footer */
+            overflow: auto;
+        }
     </style>
 </head>
 <body>
@@ -93,42 +154,67 @@
     </header>
     <nav>
         <ul>
-            <li><a href="#" class="btn">Accueil</a></li>
+            <li><a href="index.html" class="btn">Accueil</a></li>
             <li><a href="#" class="btn">À propos du projet</a></li>
             <li><a href="historique.html" class="btn">Historique des tests</a></li>
             <li><a href="#" class="btn">Contact</a></li>
+        </ul>
     </nav>
-  </ul>
-  </div>
-</nav>
     <main>
-    <h2>Choisissez un test à analyser</h2>
-        <form action="/analyse" method="get">
-            <label for="test_name">Sélectionnez un test:</label>
-            <select name="test_name" id="test_name">
-                {% for test in liste_tests %}
-                <option value="{{ test }}">{{ test }}</option>
-                {% endfor %}
-            </select>
-            <input type="submit" value="Lancer l'analyse">
-        </form>
+        <h2>Choisissez un test à analyser</h2>
+        <div class="row">
+        <div class="col-md-6">
+            <form action="/analyse" method="get">
+                <div class="form-group">
+                    <label for="test_name">Sélectionnez un test:</label>
+                    <select name="test_name" id="test_name" class="form-control">
+                        {% for test in liste_tests %}
+                            <option value="{{ test }}">{{ test }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form id="info-form">
+                <div class="form-group">
+                    <label for="firstname">Prénom :</label>
+                    <input type="text" class="form-control" id="firstname" name="firstname" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Nom :</label>
+                    <input type="text" class="form-control" id="lastname" name="lastname" required>
+                </div>
+                <div class="form-group">
+                    <label for="distance">Distance du test (en mètres) :</label>
+                    <input type="number" class="form-control" id="distance" name="distance" min="1" required>
+                </div>
+                <button type="button" id="lancer-analyse" class="btn btn-primary btn-lg">Lancer l'analyse</button>
+            </form>
+        </div>
+    </div>
     </main>
         <footer>
-        <div class="footer-container">
-            <div class="footer-info">
-                <p>Copyright © 2023 Projet IMU Digisport</p>
-                <p> By Aymeric Fontaine</p>
-                <p> Nour Ait Kadour</p>
-                <p> Marwa Gnaoui</p>
-                <p> Kilian Bertholon</p>
+            <div class="footer-container">
+                <div class="footer-info">
+                    <p>Copyright © 2023 Projet IMU Digisport</p>
+                    <p>By Aymeric Fontaine</p>
+                    <p>Nour Ait Kadour</p>
+                    <p>Marwa Gnaoui</p>
+                    <p>Kilian Bertholon</p>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
     <script>
-document.getElementById("lancer-analyse").addEventListener("click", function() {
-    const test = document.getElementById("test-selector").value;
-    window.location.href = "/analyse/" + encodeURIComponent(test);
+    document.getElementById("lancer-analyse").addEventListener("click", function() {
+        const test = document.getElementById("test_name").value;
+        const firstname = document.getElementById("firstname").value;
+        const lastname = document.getElementById("lastname").value;
+        const distance = document.getElementById("distance").value;
+        const url = `/analyse?test_name=${encodeURIComponent(test)}&firstname=${encodeURIComponent(firstname)}&lastname=${encodeURIComponent(lastname)}&distance=${encodeURIComponent(distance)}`;
+        window.location.href = url;
 });
-</script>
+    </script>
 </body>
 </html>

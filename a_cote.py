@@ -23,8 +23,7 @@ from scipy.signal import argrelextrema
 
 #def analyse_capteur(fichiers_csv):
 
-data = pd.read_csv("test_finaux/breq1_full.csv", header=0, sep = ";")
-data = data.iloc[:, :-1]
+data = pd.read_csv("test_finaux/nour_100m_11h16.csv", skiprows=10)
 accel_x = data['Acc_X']
 accel_y = data['Acc_Y']
 accel_z = data['Acc_Z']
@@ -71,12 +70,14 @@ else:
 slopes = slopes[start_index:]
 
 percentile_90 = np.percentile(slopes, 90)
+percentile_50 = np.percentile(slopes, 50)
+
 threshold = -600
 # Trouver les indices des pics minimums
 minima_indices = argrelextrema(slopes, np.less, order = 10)[0]
 minima_indices = minima_indices[slopes[minima_indices] < threshold]
 
-peak_height_max = (percentile_90 + percentile_90) / 2
+peak_height_max = (percentile_90 + percentile_50) / 2
 
 
 peaks, _ = find_peaks(slopes, height=peak_height_max)
@@ -106,10 +107,7 @@ plt.plot(slopes, label="Pente courbe d'accélérations")
 plt.plot(peaks, slopes[peaks], "x", label="Pics max détectés")
 plt.plot(minima_indices, slopes[minima_indices], "o", label="Pics min détectés")
 
-# Légende et étiquettes des axes
-plt.legend()
-plt.xlabel("Échantillons")
-plt.ylabel("Pente courbe d'accélérations")
+
 
 print(ground_contact)
 median_ground_contact = np.median(ground_contact)
@@ -119,7 +117,7 @@ print("Médiane temps de contact au sol :", median_ground_contact)
 tps_course = round((len(slopes)/60), 3)
 print("temps de course en s :", tps_course)
 
-distance = 257
+distance = 100
 
 vitesse = round((distance / tps_course), 3)
 print("vitesse moyenne de course :", vitesse, "m/s", "\n", "ou", round((vitesse*3.6),3), "km/h")

@@ -98,6 +98,10 @@
         }
         
         footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
             background-color: #000000;
             color: #fff;
             padding: 10px;
@@ -111,12 +115,21 @@
         
         }
         
+        html, body {
+            height: 100%;
+        }
+        
+        main {
+            flex: 1;
+        }
+        
          /* Ajouté pour définir une hauteur maximale pour le contenu principal */
         main {
             max-height: calc(100% - 60px - 60px); /* 60px est la hauteur du header et du footer */
             overflow: auto;
         }
     </style>
+    <script src="js/affichage_id_uti.js"></script>
 </head>
 <body>
     <header>
@@ -134,13 +147,19 @@
 </nav>
         <main>
         <div class="content-wrapper">
+            <table id="info-table" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Distance du test (mètres)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
              <div class="results">   
                 <h2>Résultats d'analyse</h2>
-                    <form action="{{ url_for('analyse') }}" method="POST">
-                        <label for="distance">Distance (en mètres) :</label>
-                        <input type="number" id="distance" name="distance" step="0.01" required>
-                        <input type="submit" value="Mettre à jour la distance">
-                    </form>
                     <table>
                         <tr>
                             <th>paramètres étudiés</th>
@@ -203,5 +222,24 @@
                 </div>
             </div>
         </footer>
+        <script>
+            const infoForm = document.getElementById('info-form');
+            const infoTable = document.getElementById('info-table');
+
+            infoForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const firstname = document.getElementById('firstname').value;
+                const lastname = document.getElementById('lastname').value;
+                const distance = document.getElementById('distance').value;
+                const row = infoTable.insertRow(-1);
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                const cell3 = row.insertCell(2);
+                cell1.innerHTML = firstname;
+                cell2.innerHTML = lastname;
+                cell3.innerHTML = distance;
+                infoForm.reset();
+    });
+        </script>
 </body>
 </html>

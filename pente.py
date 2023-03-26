@@ -5,6 +5,15 @@ import matplotlib.pyplot as plt
 from scipy.signal import butter, filtfilt
 from scipy.signal import find_peaks
 from scipy.signal import argrelextrema
+import cgi
+import datetime as dt
+from flask import current_app
+
+
+form = cgi.FieldStorage()
+prenom = form.getvalue("prenom")
+nom = form.getvalue("nom")
+distance = form.getvalue("distance")
 
 def liste_tests():
     dossier_tests = 'C:/Users/kilia/Desktop/app_projet/test_finaux'  # Spécifiez le dossier où se trouvent vos fichiers CSV
@@ -112,7 +121,7 @@ def analyse_capteur(fichiers_csv):
     tps_course = round((len(slopes)/60), 3)
     print("temps de course en s :", tps_course)
     
-    distance = 30
+    distance = 40
     
     vitesse = round((distance / tps_course), 3)
     print("vitesse moyenne de course :", vitesse, "m/s", "\n", "ou", round((vitesse*3.6),3), "km/h")

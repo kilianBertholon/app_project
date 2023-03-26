@@ -7,6 +7,7 @@ app = Flask(__name__)
 basedir = Path(__file__).resolve().parent
 data_folder = basedir / "test_finaux"
 
+
 @app.route('/')
 def index():
     tests_list = liste_tests()
