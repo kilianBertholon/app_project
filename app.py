@@ -20,6 +20,7 @@ def analyse():
 
 @app.route('/historique')
 def historique():
+    
     return render_template('historique.html')
 
 if __name__ == '__main__':
